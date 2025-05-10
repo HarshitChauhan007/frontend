@@ -16,12 +16,12 @@ export default function Hero() {
       ease: "power4.out",
     })
       .to("#second", {
-        duration: 0.8,
-        x: 900,
+        duration: 1,
+        x: 600,
         opacity: 1,
       })
       .to("#third", {
-        y: -300,
+        y: -200,
         duration: 1.2,
         delay: 0.5,
         ease: "power4.out",
@@ -35,7 +35,7 @@ export default function Hero() {
         end: "bottom 60%",
         scrub: true,
       },
-      x: -500,
+      y: -500,
       opacity: 0,
     });
 
@@ -46,7 +46,7 @@ export default function Hero() {
         end: "bottom 60%",
         scrub: true,
       },
-      x: -500,
+      y: -500,
       opacity: 0,
       delay: 0.2,
     });
@@ -58,7 +58,7 @@ export default function Hero() {
         end: "bottom 60%",
         scrub: true,
       },
-      x: -500,
+      y: -500,
       opacity: 0,
       delay: 0.4,
     });
@@ -67,11 +67,14 @@ export default function Hero() {
   return (
     <div className="min-h-screen bg-[url('/bg-image-welcome.jpg')] bg-cover bg-center bg-repeat bg-fixed">
       <div className="flex justify-center items-center flex-col p-50">
-        <h1 id="first" className="text-8xl font-bold">
+        <h1 id="first" className="text-6xl font-bold">
           Welcome to Eventra!
         </h1>
       </div>
-      <h2 className="text-6xl text-gray-600 w-4xl opacity-0" id="second">
+      <h2
+        className="text-4xl text-black w-4xl opacity-0 font-extralight"
+        id="second"
+      >
         Turning moments into memories — manage, plan, and celebrate with ease!
       </h2>
       <div

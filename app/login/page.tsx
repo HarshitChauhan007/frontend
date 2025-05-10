@@ -1,49 +1,64 @@
 "use client";
-
-import { useEffect } from "react";
-import gsap from "gsap";
+import { useState, useEffect } from "react";
+import useAuth from "@/hooks/useauth";
+import { Input } from "@/components/ui/input";
+import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
 
 export default function Login() {
-  useEffect(() => {
-    gsap.from("#loginContainer", {
-      duration: 1.5,
-      y: -100,
-      opacity: 0,
-      ease: "bounce.out",
-    });
+  const router = useRouter();
+  const { LoginUser, loading, error } = useAuth();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-    gsap.from(".input", {
-      duration: 1.2,
-      x: -100,
-      opacity: 0,
-      stagger: 0.4,
-      ease: "power3.out",
-    });
-  }, []);
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      const user = await LoginUser({ email, password });
+      console.log(user);
+      setEmail("");
+      setPassword("");
+      router.push("/userdashboard");
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#fefce8] via-[#fdba74] to-[#fb923c] flex justify-center items-center">
-      <div
-        id="loginContainer"
-        className="bg-white/90 backdrop-blur-md shadow-xl p-10 rounded-3xl w-[400px] flex flex-col gap-6 items-center"
-      >
-        <h1 className="text-4xl font-bold text-[#d97706]">Login to Eventra</h1>
-
-        <input
-          type="text"
-          placeholder="Username"
-          className="input w-full px-4 py-3 border border-[#fcd34d] rounded-xl focus:outline-none focus:ring-2 focus:ring-[#f59e0b] text-lg"
-        />
-
-        <input
-          type="password"
-          placeholder="Password"
-          className="input w-full px-4 py-3 border border-[#fcd34d] rounded-xl focus:outline-none focus:ring-2 focus:ring-[#f59e0b] text-lg"
-        />
-
-        <button className="mt-4 bg-gradient-to-r from-[#f59e0b] to-[#f97316] text-white font-bold text-xl py-3 px-6 rounded-2xl shadow-md hover:scale-105 transition-transform duration-300">
-          Submit
-        </button>
+    <div className="min-h-screen flex justify-center items-center bg-gray-100">
+      <div className="bg-white p-8 rounded-lg shadow-md w-[400px]">
+        <h1 className="text-2xl font-bold text-center mb-6">Login</h1>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <Input
+            type="email"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className="w-full p-3 border border-gray-300 rounded-md "
+          />
+          <Input
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+          <Button
+            type="submit"
+            className="w-full py-3 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-all duration-300"
+          >
+            {loading ? "Logging in..." : "Submit"}
+          </Button>
+          {error && <p className="text-red-500 text-sm text-center">{error}</p>}
+        </form>
+        <div className="mt-4 text-center">
+          <Button
+            onClick={() => router.push("/register")}
+            className="text-blue-500"
+          >
+            Register
+          </Button>
+        </div>
       </div>
     </div>
   );

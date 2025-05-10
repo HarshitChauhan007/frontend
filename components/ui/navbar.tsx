@@ -21,7 +21,10 @@ export default function Navbar() {
             </button>
           </li>
           <li>
-            <button className="text-black font-semibold text-4xl px-4 py-2 hover:text-amber-500 transition">
+            <button
+              className="text-black font-semibold text-4xl px-4 py-2 hover:text-amber-500 transition"
+              onClick={() => router.push("/register")}
+            >
               Register
             </button>
           </li>
